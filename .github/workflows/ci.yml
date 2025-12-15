@@ -14,18 +14,9 @@ jobs:
           echo "Preparing build tools (may require sudo/apt)"
           sudo apt-get update -y || true
           sudo apt-get install -y build-essential || true
-      - name: Clean and build C sample (force rebuild)
+      - name: Build C sample
         run: |
-          echo "Cleaning any pre-existing binaries"
-          rm -f hello || true
-          make clean || true
-          echo "Forcing rebuild"
-          make -B || gcc -O2 -Wall -o hello hello.c
-      - name: Build diagnostics
-        run: |
-          echo "Runner uname:"; uname -a
-          echo "GCC version:"; gcc --version || true
-          echo "Built file type:"; file ./hello || true
+          make -C . || gcc -O2 -Wall -o hello hello.c
       - name: Run C sample
         run: |
           echo "Running the compiled binary"
